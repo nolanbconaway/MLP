@@ -55,10 +55,10 @@ for modelnumber = 1:numinitials
         %   ------------------------------------------------------ % 
         
         %  obtain error on the output units
-        outputderivative = 2*(outputactivations - targets)
+        outputderivative = 2*(outputactivations - targets);
         
         %  obtain error on the hidden units
-		hiddenderivative=outputderivative*outweights'
+		hiddenderivative=outputderivative*outweights';
         if strcmp(hiddenactrule,'sigmoid') % applying sigmoid;
 			hiddenderivative=hiddenderivative(:,2:end).*sigmoidGradient(hiddenactivation_raw);
         elseif strcmp(hiddenactrule,'tanh') %applying tanh
