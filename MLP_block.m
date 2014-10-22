@@ -25,7 +25,6 @@ v2struct(model) %unpack input params
 
 % initializing some useful variables
 numattributes = size(inputs,2);
-numitems = size(inputs,1); 
 numtargets = size(targets,2);
 
 training=zeros(numblocks,numinitials);
@@ -42,14 +41,15 @@ for modelnumber = 1:numinitials
     %   ------------------------------------------------------ % 
 	for blocknumber = 1:numblocks
        
-		
 % 		pass activations through model
         [outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
 			FORWARDPASS(inweights,outweights,inputs,hiddenactrule,outputactrule);
 
-% 		get error on outputs
-        ssq = sum(sum((outputactivations - targets).^2));
-        training(blocknumber,modelnumber)=ssq;
+% 		determine classification accuracy
+		[~,indecies] = max(targets,[],2);
+		accuracy = diag(outputactivations(:,indecies)) ./ ...
+			sum(outputactivations,2);
+        training(blocknumber,modelnumber)=mean(accuracy);
 		
         %   Back-propagating the activations
         %   ------------------------------------------------------ % 

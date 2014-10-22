@@ -1,4 +1,4 @@
-function result= MLP(model,inputs,targets)
+function result= MLP_trial(model,inputs,targets)
 
 % ----------------------------------------------------------------------------
 % DESCRIPTION
@@ -56,9 +56,10 @@ for modelnumber = 1:numinitials
         [outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
 			FORWARDPASS(inweights,outweights,currentinput,hiddenactrule,outputactrule);
 		
-% 		get error on outputs
-        ssq = sum((outputactivations - currenttarget).^2);
-        training(trialnumber,modelnumber)=ssq;
+% 		determine classification accuracy
+        accuracy = outputactivations(currenttarget==1) ./ ...
+			sum(outputactivations);
+        training(trialnumber,modelnumber)=accuracy;
 		
         %   Back-propagating the activations
         %   ------------------------------------------------------ % 

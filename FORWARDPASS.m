@@ -1,14 +1,13 @@
 function...
 	[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
-		FORWARDPASS(inweights,outweights,...%weight matrices
-			inputpatterns,...%activations to be passed through the model
-			hiddenactrule,outactrule) %category label that p(a) is evaluated by    
+		FORWARDPASS(inweights,outweights,...% weight matrices
+			inputpatterns,...% activations to be passed through the model
+			hiddenactrule,outactrule) % option for activation rules
                    
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % USAGE
-% 	[pCat,outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
-% 	forwardpass(inweights,outweights,inputpatterns,hiddenactrule,
-% 			outactrule,beta,humbleClassify,valueRange,currentcategory)
+% 	[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
+%		forwardpass(inweights,outweights,inputpatterns,hiddenactrule,outactrule)
 % 
 % DESCRIPTION
 % 	This completes a forward pass, and returns p(cat),as well as any info 
@@ -17,7 +16,6 @@ function...
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % 
 % OUTPUT ARGUMENTS
-% 	p: probabilty of classification as member of category C
 % 	outputactivations: output layer activations
 % 	hiddenactivation: hidden layer activations,including bias
 % 	hiddenactivation_raw: dot product of inputs and in-hid weights
