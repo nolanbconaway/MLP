@@ -8,14 +8,14 @@ function result = MLP_block(model,inputs,targets)
 % INPUT ARGUMENTS:
 % 	model is a struct that is assumed to contain:
 % 		model.numblocks = 16; % number of passes through the training set
-% 		model.numinitials = 50; % number of randomized divas
+% 		model.numinitials = 50; % number of randomized initalizations
 % 		model.weightrange = .5; % range of inital weight values
 % 		model.numhiddenunits = 2; % # hidden units
 % 		model.learningrate = .15; % learning rate for gradient descent
 % ----------------------------------------------------------------------------
 
 %   these are optional editables, currently set at default values
-	hiddenactrule = 'sigmoid'; % which activation rule?
+	hiddenactrule = 'sigmoid'; % options: 'sigmoid', 'tanh'
 	outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid', 'tanh'
 	weightcenter=0; % mean value of weights
 % ----------------------------------------------------------------------------
@@ -47,8 +47,7 @@ for modelnumber = 1:numinitials
 
 % 		determine classification accuracy
 		[~,indecies] = max(targets,[],2);
-		accuracy = diag(outputactivations(:,indecies)) ./ ...
-			sum(outputactivations,2);
+		accuracy = diag(outputactivations(:,indecies)) ./ sum(outputactivations,2);
         training(blocknumber,modelnumber)=mean(accuracy);
 		
         %   Back-propagating the activations
@@ -60,12 +59,10 @@ for modelnumber = 1:numinitials
         %  obtain error on the hidden units
 		hiddenderivative=outputderivative*outweights';
         if strcmp(hiddenactrule,'sigmoid') % applying sigmoid;
-			hiddenderivative=hiddenderivative(:,2:end).*sigmoidGradient(hiddenactivation_raw);
+			hiddenderivative=hiddenderivative(:,2:end).*sigmoidgrad(hiddenactivation_raw);
         elseif strcmp(hiddenactrule,'tanh') %applying tanh
-			hiddenderivative=hiddenderivative(:,2:end).*tanhGradient(hiddenactivation_raw);
-        else hiddenderivative=hiddenderivative(:,2:end).*...
-				(hiddenactivation_raw.*(1-hiddenactivation_raw));
-        end 
+			hiddenderivative=hiddenderivative(:,2:end).*tanhgrad(hiddenactivation_raw);
+        end
 
         %  gradient descent
 		outweights = gradientDescent(learningrate,hiddenactivation,...

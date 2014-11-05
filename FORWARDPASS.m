@@ -37,7 +37,7 @@ hiddenactivation_raw=inputswithbias*inweights;
 
 % apply hidden node activation rule
 if strcmp(hiddenactrule,'sigmoid') % applying sigmoid;
-    hiddenactivation=sigmoid(hiddenactivation_raw);
+    hiddenactivation=logsig(hiddenactivation_raw);
 elseif strcmp(hiddenactrule,'tanh')  %applying tanh
     hiddenactivation=tanh(hiddenactivation_raw);
 else hiddenactivation=hiddenactivation_raw;
@@ -51,7 +51,7 @@ hiddenactivation=[ones(numitems,1),hiddenactivation];
 outputactivations=hiddenactivation*outweights;
 
 if strcmp(outactrule,'sigmoid') % applying sigmoid
-	outputactivations=sigmoid(outputactivations);
+	outputactivations=logsig(outputactivations);
 elseif strcmp(outactrule,'tanh') %applying tanh
 	outputactivations=tanh(outputactivations);
 end
