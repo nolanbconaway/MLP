@@ -1,4 +1,4 @@
-function result = MLP_block(model,inputs,targets)
+function result = MLP_block(model)
 
 % ----------------------------------------------------------------------------
 % DESCRIPTION
@@ -12,11 +12,13 @@ function result = MLP_block(model,inputs,targets)
 % 		model.weightrange = .5; % range of inital weight values
 % 		model.numhiddenunits = 2; % # hidden units
 % 		model.learningrate = .15; % learning rate for gradient descent
+%	   	model.outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid'
+% 
+%		model.inputs is an [eg,attribute] matrix of training patterns
+%		model.targets is [eg,category] matrix of category assignments
 % ----------------------------------------------------------------------------
 
 %   these are optional editables, currently set at default values
-	hiddenactrule = 'sigmoid'; % options: 'sigmoid', 'tanh'
-	outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid', 'tanh'
 	weightcenter=0; % mean value of weights
 % ----------------------------------------------------------------------------
 
@@ -32,43 +34,29 @@ training=zeros(numblocks,numinitials);
 %   Initializing diva and running the simulation
 %   ------------------------------------------------------ % 
 for modelnumber = 1:numinitials
-    
-    %  generating initial weights
-    [inweights,outweights] = getweights(numattributes, numhiddenunits, ...
+	
+	%  generating initial weights
+	[inweights,outweights] = getweights(numattributes, numhiddenunits, ...
 		numtargets, weightrange, weightcenter);
-    
-    %   iterate over each trial in the presentation order
-    %   ------------------------------------------------------ % 
+	
+	%   iterate over each trial in the presentation order
+	%   ------------------------------------------------------ % 
 	for blocknumber = 1:numblocks
-       
+	   
 % 		pass activations through model
-        [outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
-			FORWARDPASS(inweights,outweights,inputs,hiddenactrule,outputactrule);
+		[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
+			FORWARDPASS(inweights,outweights,inputs,outputactrule);
 
 % 		determine classification accuracy
 		[~,indecies] = max(targets,[],2);
 		accuracy = diag(outputactivations(:,indecies)) ./ sum(outputactivations,2);
-        training(blocknumber,modelnumber)=mean(accuracy);
-		
-        %   Back-propagating the activations
-        %   ------------------------------------------------------ % 
-        
-        %  obtain error on the output units
-        outputderivative = 2*(outputactivations - targets);
-        
-        %  obtain error on the hidden units
-		hiddenderivative=outputderivative*outweights';
-        if strcmp(hiddenactrule,'sigmoid') % applying sigmoid;
-			hiddenderivative=hiddenderivative(:,2:end).*sigmoidgrad(hiddenactivation_raw);
-        elseif strcmp(hiddenactrule,'tanh') %applying tanh
-			hiddenderivative=hiddenderivative(:,2:end).*tanhgrad(hiddenactivation_raw);
-        end
+		training(blocknumber,modelnumber)=mean(accuracy);		
 
-        %  gradient descent
-		outweights = gradientDescent(learningrate,hiddenactivation,...
-			outputderivative,outweights);
-		inweights = gradientDescent(learningrate,inputswithbias,...
-			hiddenderivative,inweights);    
+		 %   Back-propagating the activations
+		%   ------------------------------------------------------ % 
+		[outweights, inweights] = BACKPROP(outweights,inweights,...
+			outputactivations,targets,hiddenactivation,...  
+			hiddenactivation_raw,inputswithbias,learningrate);
 	end
 end
 

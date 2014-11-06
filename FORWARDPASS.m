@@ -2,8 +2,8 @@ function...
 	[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
 		FORWARDPASS(inweights,outweights,...% weight matrices
 			inputpatterns,...% activations to be passed through the model
-			hiddenactrule,outactrule) % option for activation rules
-                   
+			outactrule) % option for activation rule
+				   
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % USAGE
 % 	[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
@@ -24,7 +24,7 @@ function...
 % INPUT ARGUMENTS
 % 	inweights,outweights: weight matrices
 % 	inputpatterns (M x N matrix): activations to be passed through the model
-% 	hiddenactrule,outactrule (string): option for activation rule
+% 	outactrule (string): option for activation rule
 % 
 %-------------------------------------------------------------------------
 
@@ -36,14 +36,7 @@ inputswithbias = [ones(numitems,1),inputpatterns];
 hiddenactivation_raw=inputswithbias*inweights;
 
 % apply hidden node activation rule
-if strcmp(hiddenactrule,'sigmoid') % applying sigmoid;
-    hiddenactivation=logsig(hiddenactivation_raw);
-elseif strcmp(hiddenactrule,'tanh')  %applying tanh
-    hiddenactivation=tanh(hiddenactivation_raw);
-else hiddenactivation=hiddenactivation_raw;
-end
-
-% adding a value of 1 to represent the bias unit 
+hiddenactivation=logsig(hiddenactivation_raw);
 hiddenactivation=[ones(numitems,1),hiddenactivation];
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
@@ -52,8 +45,6 @@ outputactivations=hiddenactivation*outweights;
 
 if strcmp(outactrule,'sigmoid') % applying sigmoid
 	outputactivations=logsig(outputactivations);
-elseif strcmp(outactrule,'tanh') %applying tanh
-	outputactivations=tanh(outputactivations);
 end
 
 
