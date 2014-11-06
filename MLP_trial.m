@@ -9,8 +9,8 @@ v2struct(model) %unpack input params
 % INPUT ARGUMENTS:
 % 	model is a struct that is assumed to contain:
 % 		model.numblocks = 16; % number of passes through the training set
-% 		model.numinitials = 50; % number of randomized initalizations
-% 		model.weightrange = .5; % range of inital weight values
+% 		model.numinitials = 50; % number of randomized initializations
+% 		model.weightrange = .5; % range of initial weight values
 % 		model.numhiddenunits = 2; % # hidden units
 % 		model.learningrate = .15; % learning rate for gradient descent
 %	   	model.outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid'
@@ -34,7 +34,7 @@ numupdates = numblocks*numitems;
 
 training=zeros(numupdates,numinitials);
 
-%   Initializing diva and running the simulation
+%   Initializing the network and running the simulation
 %   ------------------------------------------------------ % 
 for modelnumber = 1:numinitials
 	
@@ -68,6 +68,6 @@ for modelnumber = 1:numinitials
 	end
 end
 
-% store perfomance in the result struct
+% store performance in the result struct
 result.training=blockrows(training,numitems);
 end

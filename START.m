@@ -12,7 +12,7 @@ addpath([pwd,'/UTILITIES/']);
 model =  struct;
 	model.numblocks = 200; % number of runs through the training set
 	model.numinitials = 2; % number of randomized models to be averaged across
-	model.weightrange = 1; % range of inital weight values
+	model.weightrange = 1; % range of initial weight values
 	model.numhiddenunits = 3; % # hidden units
 	model.learningrate = 0.15; % learning rate for gradient descent
 	model.outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid'

@@ -31,7 +31,7 @@ function...
 numitems=size(inputpatterns,1);
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% input and hidden unit propgation
+% input and hidden unit propagation
 inputswithbias = [ones(numitems,1),inputpatterns]; 
 hiddenactivation_raw=inputswithbias*inweights;
 
@@ -40,7 +40,7 @@ hiddenactivation=logsig(hiddenactivation_raw);
 hiddenactivation=[ones(numitems,1),hiddenactivation];
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% get output activaton
+% get output activation
 outputactivations=hiddenactivation*outweights;
 
 if strcmp(outactrule,'sigmoid') % applying sigmoid

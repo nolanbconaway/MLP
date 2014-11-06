@@ -8,8 +8,8 @@ function result = MLP_block(model)
 % INPUT ARGUMENTS:
 % 	model is a struct that is assumed to contain:
 % 		model.numblocks = 16; % number of passes through the training set
-% 		model.numinitials = 50; % number of randomized initalizations
-% 		model.weightrange = .5; % range of inital weight values
+% 		model.numinitials = 50; % number of randomized initializations
+% 		model.weightrange = .5; % range of initial weight values
 % 		model.numhiddenunits = 2; % # hidden units
 % 		model.learningrate = .15; % learning rate for gradient descent
 %	   	model.outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid'
@@ -31,7 +31,7 @@ numtargets = size(targets,2);
 
 training=zeros(numblocks,numinitials);
 
-%   Initializing diva and running the simulation
+%   Initializing the network and running the simulation
 %   ------------------------------------------------------ % 
 for modelnumber = 1:numinitials
 	
@@ -52,7 +52,7 @@ for modelnumber = 1:numinitials
 		accuracy = diag(outputactivations(:,indecies)) ./ sum(outputactivations,2);
 		training(blocknumber,modelnumber)=mean(accuracy);		
 
-		 %   Back-propagating the activations
+		%   Back-propagating the activations
 		%   ------------------------------------------------------ % 
 		[outweights, inweights] = BACKPROP(outweights,inweights,...
 			outputactivations,targets,hiddenactivation,...  
@@ -60,6 +60,6 @@ for modelnumber = 1:numinitials
 	end
 end
 
-% store perfomance in the result struct
+% store performance in the result struct
 result.training=training;
 end
