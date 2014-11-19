@@ -6,7 +6,7 @@
 
 % initialize the search path
 clear;close;clc;
-addpath([pwd '/UTILITIES/']); 
+addpath([pwd '/utils/']); 
 
 % initialize network design and set parameters
 model =  struct;
@@ -14,8 +14,8 @@ model =  struct;
 	model.numinitials = 2; % number of randomized models to be averaged across
 	model.weightrange = 1; % range of initial weight values
 	model.numhiddenunits = 3; % # hidden units
-	model.learningrate = 0.15; % learning rate for gradient descent
-	model.outputrule = ''; % options: 'linear', 'sigmoid'
+	model.learningrate = 0.25; % learning rate for gradient descent
+	model.outputrule = 'sigmoid'; % options: 'linear', 'sigmoid'
 
 model.inputs = [-1 -1
 				 1  1
