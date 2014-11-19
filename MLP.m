@@ -57,6 +57,10 @@ for modelnumber = 1:numinitials
 			outputactivations,targets,hiddenactivation,...  
 			hiddenactivation_raw,inputswithbias,learningrate);
 	end
+% 	------ TEST SET CAN GO HERE -------
+% 	TEST_OUTS = FORWARDPASS(inweights,outweights,TEST_SET,outputrule);
+% 	% code to store test performance here.
+%   ------ END TEST SET -------
 end
 
 % store performance in the result struct

@@ -14,22 +14,21 @@ model =  struct;
 	model.numinitials = 2; % number of randomized models to be averaged across
 	model.weightrange = 1; % range of initial weight values
 	model.numhiddenunits = 3; % # hidden units
-	model.learningrate = 0.25; % learning rate for gradient descent
+	model.learningrate = 0.15; % learning rate for gradient descent
 	model.outputrule = 'sigmoid'; % options: 'linear', 'sigmoid'
 
+	
+% 	inputs and targets will be XOR
 model.inputs = [-1 -1
 				 1  1
 				-1  1
 				 1 -1];
 
-model.targets =[1 0
-                1 0
-                0 1
-                0 1];
-       
+model.targets = [1 0
+                 1 0
+                 0 1
+                 0 1];
+
 result = MLP(model);
 
 plot(result.training)
-v=axis;
-v(3:4)=[0 1];
-axis(v);
