@@ -2,7 +2,7 @@ function...
 	[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
 		FORWARDPASS(inweights,outweights,...% weight matrices
 			inputpatterns,...% activations to be passed through the model
-			outactrule) % option for activation rule
+			outputrule) % option for activation rule
 				   
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 % USAGE
@@ -43,7 +43,7 @@ hiddenactivation=[ones(numitems,1),hiddenactivation];
 % get output activation
 outputactivations=hiddenactivation*outweights;
 
-if strcmp(outactrule,'sigmoid') % applying sigmoid
+if strcmp(outputrule,'sigmoid') % applying sigmoid
 	outputactivations=logsig(outputactivations);
 end
 

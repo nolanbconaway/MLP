@@ -1,9 +1,9 @@
-function result = MLP_block(model)
+function result = MLP(model)
 
 % ----------------------------------------------------------------------------
 % DESCRIPTION
 %	this script does most of the work for training an MLP. 
-%	it creates a result struct containing accuracy over blocks
+%	it creates a result struct containing error over blocks
 
 % INPUT ARGUMENTS:
 % 	model is a struct that is assumed to contain:
@@ -12,7 +12,7 @@ function result = MLP_block(model)
 % 		model.weightrange = .5; % range of initial weight values
 % 		model.numhiddenunits = 2; % # hidden units
 % 		model.learningrate = .15; % learning rate for gradient descent
-%	   	model.outputactrule = 'sigmoid'; % options: 'linear', 'sigmoid'
+%	   	model.outputrule = 'sigmoid'; % options: 'linear', 'sigmoid'
 % 
 %		model.inputs is an [eg,attribute] matrix of training patterns
 %		model.targets is [eg,category] matrix of category assignments
@@ -45,12 +45,11 @@ for modelnumber = 1:numinitials
 	   
 % 		pass activations through model
 		[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
-			FORWARDPASS(inweights,outweights,inputs,outputactrule);
+			FORWARDPASS(inweights,outweights,inputs,outputrule);
 
 % 		determine classification accuracy
-		[~,indecies] = max(targets,[],2);
-		accuracy = diag(outputactivations(:,indecies)) ./ sum(outputactivations,2);
-		training(blocknumber,modelnumber)=mean(accuracy);		
+		accuracy = sum((outputactivations - targets).^2, 2);
+		training(blocknumber,modelnumber) = mean(accuracy);		
 
 		%   Back-propagating the activations
 		%   ------------------------------------------------------ % 
@@ -61,5 +60,5 @@ for modelnumber = 1:numinitials
 end
 
 % store performance in the result struct
-result.training=training;
+result.training = mean(training,2);
 end
