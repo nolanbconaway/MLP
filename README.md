@@ -8,4 +8,4 @@ As-is, **START.M** trains an MLP classifier on a simple XOR dataset, and plots e
 
 *Nolan Conaway*
 
-*November 16, 2014*
+*November 18, 2014*
