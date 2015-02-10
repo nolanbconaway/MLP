@@ -24,6 +24,7 @@ function result = MLP(model)
 
 result=struct; %initialize the results structure
 v2struct(model) %unpack input params
+rng('shuffle') %get random seed
 
 % initializing some useful variables
 numattributes = size(inputs,2);
