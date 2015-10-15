@@ -47,11 +47,12 @@ for modelnumber = 1:numinitials
 % 		pass activations through model
 		[outputactivations,hiddenactivation,hiddenactivation_raw,inputswithbias] = ...
 			FORWARDPASS(inweights,outweights,inputs,outputrule);
-
+		
+		
 % 		determine classification accuracy
 		accuracy = sum((outputactivations - targets).^2, 2);
 		training(blocknumber,modelnumber) = mean(accuracy);		
-
+		
 		%   Back-propagating the activations
 		%   ------------------------------------------------------ % 
 		[outweights, inweights] = BACKPROP(outweights,inweights,...

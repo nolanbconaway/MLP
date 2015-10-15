@@ -45,4 +45,8 @@ hiddendelta = learningrate * inputswithbias'   * hiddendelta;
 outweights = outweights - outputdelta;
 inweights  = inweights - hiddendelta;
 
+% set maximum value to prevent NaNs
+outweights(outweights>1e+100) = 1e+100;
+inweights(inweights>1e+100) = 1e+100;
+
 end

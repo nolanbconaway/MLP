@@ -11,10 +11,10 @@ addpath([pwd '/utils/']);
 % initialize network design and set parameters
 model =  struct;
 	model.numblocks = 200; % number of runs through the training set
-	model.numinitials = 2; % number of randomized models to be averaged across
+	model.numinitials = 10; % number of randomized models to be averaged across
 	model.weightrange = 1; % range of initial weight values
 	model.numhiddenunits = 3; % # hidden units
-	model.learningrate = 0.15; % learning rate for gradient descent
+	model.learningrate = .25; % learning rate for gradient descent
 	model.outputrule = 'sigmoid'; % options: 'linear', 'sigmoid'
 
 	
