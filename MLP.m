@@ -40,7 +40,7 @@ for modelnumber = 1:numinitials
 	[inweights,outweights] = getweights(numattributes, numhiddenunits, ...
 		numtargets, weightrange, weightcenter);
 	
-	%   iterate over each trial in the presentation order
+	%   iterate over epochs
 	%   ------------------------------------------------------ % 
 	for blocknumber = 1:numblocks
 	   
@@ -49,7 +49,7 @@ for modelnumber = 1:numinitials
 			FORWARDPASS(inweights,outweights,inputs,outputrule);
 		
 		
-% 		determine classification accuracy
+% 		calculate MSE
 		accuracy = sum((outputactivations - targets).^2, 2);
 		training(blocknumber,modelnumber) = mean(accuracy);		
 		
