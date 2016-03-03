@@ -48,7 +48,7 @@ inweights  = inweights - hiddendelta;
 % set min and max value to prevent NaNs
 outweights(outweights >  1e+100) =  1e+100;
 inweights(inweights   >  1e+100) =  1e+100;
-outweights(outweights < -1e+100) = -1e-100;
-inweights(inweights   < -1e+100) = -1e-100;
+outweights(outweights < -1e+100) = -1e+100;
+inweights(inweights   < -1e+100) = -1e+100;
 
 end
